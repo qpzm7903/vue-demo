@@ -1,6 +1,6 @@
 <template>
   <div class="todo-header">
-    <input type="text" placeholder="请输入你的任务名称，按回车键确认" v-model="title" @keyup.enter="addTodo" />
+    <input type="text" placeholder="请输入你的任务名称，按回车键确认" v-model="title" @keyup.enter="addTodoObj" />
   </div>
 </template>
 
@@ -13,14 +13,20 @@ export default {
       title: ""
     }
   },
+  props: ['addTodo'],
+
   methods: {
-    addTodo (event) {
+    addTodoObj (event) {
+      if (!this.title.trim()) {
+        return alert("input can not be empty")
+      }
       const todoObj = {
         id: nanoid(),
         title: event.target.value,
         done: false
       }
-      console.log(todoObj)
+      this.addTodo(todoObj)
+      this.title = ''
     }
   }
 }

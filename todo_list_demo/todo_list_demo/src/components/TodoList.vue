@@ -13,13 +13,10 @@ export default {
   components: { TodoItem },
   data () {
     return {
-      todos: [
-        { id: '001', title: "code", done: true },
-        { id: '002', title: "code", done: false },
-        { id: '003', title: "code", done: true },
-      ]
+
     }
-  }
+  },
+  props: ["todos"]
 }
 </script>
 
