@@ -4,7 +4,7 @@
       <div class="todo-wrap">
         <TodoHeader :addTodo='addTodo' />
         <TodoList :todos='todos' :checkTodo='checkTodo' :deleteTodo="deleteTodo" />
-        <TodoFooter />
+        <TodoFooter :todos='todos' />
       </div>
     </div>
   </div>
