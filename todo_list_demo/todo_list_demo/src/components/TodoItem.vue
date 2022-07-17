@@ -2,7 +2,7 @@
   <div>
     <li>
       <label>
-        <input type="checkbox" :checked="todo.done" />
+        <input type="checkbox" :checked="todo.done" @click="handleClick(todo)" />
         <span>{{ todo.title }}</span>
       </label>
       <button class="btn btn-danger" style="display:none">删除</button>
@@ -13,7 +13,13 @@
 <script>
 export default {
   name: "TodoItem",
-  props: ["todo"]
+  props: ["todo"],
+  methods: {
+    handleClick (todoObj) {
+      console.log(todoObj)
+      todoObj.done = !todoObj.done
+    }
+  }
 }
 </script>
 
