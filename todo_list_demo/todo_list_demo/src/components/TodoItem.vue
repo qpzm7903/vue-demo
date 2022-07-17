@@ -3,6 +3,8 @@
     <li>
       <label>
         <input type="checkbox" :checked="todo.done" @click="handleClick(todo)" />
+        <!-- 用  双向绑定也可以实现 -->
+        <!-- <input type="checkbox" v-model="todo.done" /> -->
         <span>{{ todo.title }}</span>
       </label>
       <button class="btn btn-danger" style="display:none">删除</button>
@@ -13,11 +15,13 @@
 <script>
 export default {
   name: "TodoItem",
-  props: ["todo"],
+  props: ["todo", "checkTodo"],
   methods: {
     handleClick (todoObj) {
       console.log(todoObj)
-      todoObj.done = !todoObj.done
+      // 一般不建议修改props里的数据
+      //   todoObj.done = !todoObj.done
+      this.checkTodo(todoObj.id)
     }
   }
 }

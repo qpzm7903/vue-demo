@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul class="todo-main">
-      <TodoItem v-for="todoObj in todos" :key="todoObj.id" :todo="todoObj" />
+      <TodoItem v-for="todoObj in todos" :key="todoObj.id" :todo="todoObj" :checkTodo="checkTodo" />
     </ul>
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
 
     }
   },
-  props: ["todos"]
+  props: ["todos", "checkTodo"]
 }
 </script>
 
