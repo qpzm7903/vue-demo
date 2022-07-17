@@ -7,7 +7,7 @@
         <!-- <input type="checkbox" v-model="todo.done" /> -->
         <span>{{ todo.title }}</span>
       </label>
-      <button class="btn btn-danger" style="display:none">删除</button>
+      <button class="btn btn-danger" @click="handleDelete(todo)">删除</button>
     </li>
   </div>
 </template>
@@ -15,13 +15,16 @@
 <script>
 export default {
   name: "TodoItem",
-  props: ["todo", "checkTodo"],
+  props: ["todo", "checkTodo", "deleteTodo"],
   methods: {
     handleClick (todoObj) {
       console.log(todoObj)
       // 一般不建议修改props里的数据
       //   todoObj.done = !todoObj.done
       this.checkTodo(todoObj.id)
+    },
+    handleDelete (todoObj) {
+      this.deleteTodo(todoObj.id)
     }
   }
 }
@@ -61,5 +64,13 @@ li:before {
 
 li:last-child {
   border-bottom: none;
+}
+
+li:hover {
+  background-color: #ddd;
+}
+
+li:hover button {
+  display: block;
 }
 </style>
