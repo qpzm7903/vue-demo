@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="./vue.js"></script>
+    <title>Title</title>
+    <style>
+        * {
+            margin: top 20px;
+        }
+
+        .demo1 {
+            height: 50px;
+            background: skyblue;
+        }
+
+        .box1 {
+            padding: 5px;
+            background: skyblue;
+        }
+
+        .box2 {
+            padding: 5px;
+            background: orange;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+
+        <!-- 插值  替换 占位符等概念 类似 spring里的SPEL-->
+        <h1>hello , {{name}}</h1>
+        <h1>单向绑定 v-bind</h1>
+        <hr />
+        <!-- v-指令，效果类似占位符，可以在很多属性前面加上v-bind，既可以绑定vue里的数据 -->
+        <!-- 绑定的内容就类似{{url}}的效果，也可以是js表示 -->
+        <a v-bind:href="url">baidu</a>
+        <hr />
+        <!-- 简写 -->
+        <a :href="url">baidu</a>
+
+        <h1>双向绑定 v-model @vlaue</h1>
+        <p>只能用在表单元素?</p>
+        <input type="text" v-model:value="name">
+
+        <h1>事件处理</h1>
+        <button v-on:click="showInfo1">点我1 v-on</button>
+        <button @click="showInfo2">点我2 @</button>
+        <button @click="showInfo3(123,$event)">点我3</button>
+        <h2>事件修饰符</h2>
+        <!-- 事件修饰符 -->
+        <!-- 停止默认行为 -->
+        <a href="http://www.baidu.com" @click.prevent="showInfo1">不会跳转的链接</a>
+
+        <!-- 停止冒泡 -->
+        <div class="demo1" @click="showInfo1">
+            <button @click.stop="showInfo">点我看看</button>
+        </div>
+
+        <!-- 只触发一次 -->
+        <button @click.once="showInfo">只有一次的按钮</button>
+
+        <!-- 先捕获，在冒泡 -->
+        <div class="box1" @click.capture="showMsg(1)">
+            div1
+            <div class="box2" @click="showMsg(2)">
+                div2
+            </div>
+        </div>
+
+        <!-- 只有target是当前才触发 -->
+        <div class="demo1" @click.self="showInfo1">
+            <button @click="showInfo">点我看看</button>
+        </div>
+
+        <!-- 事件异步执行 -->
+        <ul @scroll.passive="showMsg(1)" class="list">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+
+        <h1>键盘事件 event</h1>
+        <!-- 按回车 -->
+        <!-- 
+            快捷键
+            回车 enter
+            删除 delete
+            退出 esc
+            空格 space
+            换行 tab
+            上 Up
+            下 down
+            左 left
+            右 right
+
+            其他按键
+
+            kebab-case 并且是小驼峰模式，中间短横线分割
+            例如
+
+            特殊键位
+            ctrl alt shift win/command
+            1. 配合 keyup使用，按下修饰键，再按其他键才会触发
+            2. 配合 keydown使用，正常触发
+            
+         -->
+        <input type="text" placeholder="按回车！" @keyup.enter="showInfo">
+
+        <!-- 事件组合， @keyup.stop.prevent...  
+            @keyup.ctrl.y  ....
+
+        -->
+
+
+        <h1>计算属性 compute</h1>
+
+        <h2>原始 插值函数</h2>
+        <div>
+            姓： <input type="text" v-model:value="firstName">
+            <br />
+            名: <input type="text" v-model:value="lastName">
+            <br />
+
+            <!-- 表示尽量简单，所有用函数最好 -->
+            姓名: <span>{{fullName()}}</span>
+        </div>
+
+
+        <h2>计算属性</h2>
+        计算出来的属性
+        <div>
+            <!-- 双向绑定 -->
+            姓： <input type="text" v-model:value="firstName">
+            <br />
+            名: <input type="text" v-model:value="lastName">
+            <br />
+
+            <!-- 表示尽量简单，所有用函数最好 -->
+            姓名: <span>{{fullName2}}</span>
+        </div>
+        <br>
+        计算出来的属性简写形式, 只读情况
+
+        <div>
+            <!-- 双向绑定 -->
+            姓： <input type="text" v-model:value="firstName">
+            <br />
+            名: <input type="text" v-model:value="lastName">
+            <br />
+
+            <!-- 表示尽量简单，所有用函数最好 -->
+            姓名: <span>{{simle_full_name}}</span>
+        </div>
+        <br>
+
+
+        <h1>监视属性 watch</h1>
+        <h2>今天天气很{{weatherInfo}}</h2>
+        <!-- 执行简单语句 -->
+        <button @click="isHot = !isHot">切换</button>
+        <button @click="changeWeather">切换</button>
+
+        <div>
+
+        </div>
+
+        <h1>深度监视 watch "object.attr" or  wathch object {deep:true}</h1>
+
+        <h1>监视的简写形式</h1>
+        <code>
+            watch:{
+                key(v,o){
+                    do something
+                }
+            }
+        </code>
+ 
+
+        <h1>绑定样式</h1>
+        <h2>字符串模式</h2>
+        通过 :class 指定class样式，绑定data里的属性
+        <h2>绑定对象写法</h2>
+
+        :class="obj",
+
+        data:{
+            obj:{
+                css-key: boolean
+            }
+        }
+
+
+        <h1>绑定style</h1>
+        也可以用 绑定对象，但是对象的key应该是要符合style的key-value的
+
+        <h2>条件渲染</h2>
+        v-show  需要个布尔值表示，true是显示，false时隐藏。节点还在
+        <p></p>
+        v-if 也可以
+        <p></p>
+        v-else-if  配合使用
+        <p></p>
+        当然还有 v-else
+        <p></p>
+        v-if 还可以配合template使用
+
+
+        <h1>列表渲染</h1>
+        v-for 指令 
+        <br>
+        例如 , data 里有个数组 persons [ {name, id ,age}]
+        <vr></vr>
+        那么 
+        v-for="p in persons"
+
+        <h1>列表过滤</h1>
+        用来做个简单的搜索，用来两个变量，watch实现，
+        <br/>
+        或者用compute实现，data里一个变量，渲染显示的是compute属性
+
+        <h2>列表排序</h2>
+
+
+        <h1>收集表单数据</h1>
+        <div>
+            <form>
+                账号 <input type="text">
+                <br>
+                密码 <input type="password">
+                <br>
+                性别
+                <br>
+                男<input type="radio" name="sex"><br>
+                女<input type="radio" name="sex"><br>
+                爱好
+                学习<input type="checkbox">
+                打游戏<input type="checkbox">
+                吃饭<input type="checkbox">
+                <br>
+                所属校区
+                <select>
+                    <option value="">请选择校区</option>
+                    <option value="beijing">北京</option>
+                    <option value="shanghai">上海</option>
+                    <option value="shenzhen">深圳</option>
+                    <option value="wuhan">武汉</option>
+                </select>
+                <br>
+                其他信息：
+                <textarea></textarea><br>
+                <input type="checkbox">
+                阅读并接受协议
+                <a href="www.test.com">《用户协议》</a>
+                <button>提交</button>
+
+            </form>
+        </div>
+
+
+    </div>
+
+    <script>
+        // vue 实例  只能绑定一个容器，一对一关系
+        const vm = new Vue({
+            el: "#root", // element 选择 root，绑定 , 然后此容器会被vue作为模板解析
+            // data 可以是个function，但是function必须返回对象
+            // data 里的内容会被vue进行数据代理，出现在vm对象里，对vm里操作data里的数据
+            data: {
+                name: "vue",
+                url: "http://www.baidu.com",
+                firstName: "姓",
+                lastName: "名",
+                isHot: true
+            },
+            methods: {
+                showMsg(msg) {
+                    console.log(msg);
+                },
+                showInfo(e) {
+                    console.log(e);
+                    console.log(e.key);
+                    alert("你好");
+                },
+                showInfo1(event) {
+                    console.log(event);
+                    alert("hello");
+                },
+                showInfo2(envtn) {
+                    console.log(event);
+                    alert("hello2")
+                },
+                showInfo3(abc, event) {
+                    console.log(abc, event);
+                    alert("hello3 " + abc)
+                },
+                fullName() {
+                    console.log("@", "fullname")
+                    return this.firstName + "-" + this.lastName
+                },
+                changeWeather() {
+                    this.isHot = !this.isHot
+                }
+
+            },
+            computed: {
+                // 调用时机 
+                // 1.初次读取时调用 
+                // 2.赖数据变化时
+                fullName2: {
+                    get() {
+                        console.log("fullname2")
+                        return this.firstName + "-" + this.lastName
+                    },
+                    set(value) {
+                        console.log(value)
+                        // 可以修改data属性
+                    }
+                },
+                simle_full_name() {
+                    return this.firstName + "-" + this.lastName
+                },
+                weatherInfo() {
+                    return this.isHot ? "炎热" : "凉爽"
+                }
+            },
+            watch: {
+                // 可以监测data里的属性
+                // 也可以监测compute属性
+                isHot: {
+                    // 初始化的时候就触发handler
+                    immediate: true,
+                    // 当 isHot 发生变化的时候，被触发
+                    handler(newValue, oldValue) {
+                        console.log("触发", newValue, oldValue)
+                    }
+                }
+            }
+
+        });
+
+        // 动态监视
+        vm.$watch("isHot", {
+            handler(newValue, oldValue) {
+                console.log("动态监视", newValue, oldValue);
+            }
+        })
+    </script>
+</body>
+
+</html>
