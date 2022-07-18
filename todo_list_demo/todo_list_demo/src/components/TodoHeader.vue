@@ -13,8 +13,6 @@ export default {
       title: ""
     }
   },
-  props: ['addTodo'],
-
   methods: {
     addTodoObj (event) {
       if (!this.title.trim()) {
@@ -25,7 +23,7 @@ export default {
         title: event.target.value,
         done: false
       }
-      this.addTodo(todoObj)
+      this.$emit('addTodo', todoObj)
       this.title = ''
     }
   }

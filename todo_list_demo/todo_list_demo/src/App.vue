@@ -2,7 +2,7 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
-        <TodoHeader :addTodo='addTodo' />
+        <TodoHeader @addTodo='addTodo' />
         <TodoList :todos='todos' :checkTodo='checkTodo' :deleteTodo="deleteTodo" />
         <TodoFooter :todos='todos' :clearAll="clearAll" :allDone="allDone" />
       </div>
