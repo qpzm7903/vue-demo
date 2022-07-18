@@ -25,11 +25,7 @@ export default {
   },
   data () {
     return {
-      todos: [
-        { id: '001', title: "code", done: true },
-        { id: '002', title: "code", done: false },
-        { id: '003', title: "code", done: true },
-      ]
+      todos: JSON.parse(localStorage.getItem("todos")) || []
     }
   },
   methods: {
@@ -52,6 +48,19 @@ export default {
     },
     allDone (done) {
       this.todos.forEach((todo) => { todo.done = done })
+    }
+  },
+  // 默认浅层
+  watch: {
+    // todos (value) {
+    //   localStorage.setItem('todos', JSON.stringify(value))
+    // }
+
+    todos: {
+      deep: true,
+      handler (value) {
+        localStorage.setItem('todos', JSON.stringify(value))
+      }
     }
   }
 }
