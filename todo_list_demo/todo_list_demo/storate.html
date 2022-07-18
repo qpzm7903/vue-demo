@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>localStorage</h1>
+    <button onclick="saveLocalStorage()">保存</button>
+    <button onclick="readLocalStorage()">读取</button>
+    <button onclick="deleteLocalStorage()">删除</button>
+    <button onclick="clearLocalStorage()">清空</button>
+
+
+    <h1>SessionStorage</h1>
+    <button onclick="saveSessionStorage()">保存</button>
+    <button onclick="readSessionStorage()">读取</button>
+    <button onclick="deleteSessionStorage()">删除</button>
+    <button onclick="clearSessionStorage()">清空</button>
+
+
+    <script>
+        function saveLocalStorage() {
+            console.log('hello');
+
+            window.localStorage.setItem("test", "hello")
+            let p = {
+                "name": "wei",
+                "age": 18
+            }
+            window.localStorage.setItem("p1", p)
+            window.localStorage.setItem("p2", JSON.stringify(p))
+
+        }
+
+        function readLocalStorage() {
+            console.log(window.localStorage.getItem("test"))
+            console.log(window.localStorage.getItem("p1"))
+            console.log(window.localStorage.getItem("p2"))
+            console.log(JSON.parse(localStorage.getItem("p2")))
+        }
+
+        function deleteLocalStorage() {
+
+            window.localStorage.removeItem("test")
+            window.localStorage.removeItem("p1")
+            window.localStorage.removeItem("p2")
+            window.localStorage.removeItem("p2")
+        }
+
+        function clearLocalStorage() {
+            window.localStorage.clear()
+
+        }
+
+        function saveSessionStorage() {
+            console.log('hello');
+
+            window.sessionStorage.setItem("test", "hello")
+            let p = {
+                "name": "wei",
+                "age": 18
+            }
+            window.sessionStorage.setItem("p1", p)
+            window.sessionStorage.setItem("p2", JSON.stringify(p))
+        }
+
+        function readSessionStorage() {
+            console.log(window.sessionStorage.getItem("test"))
+            console.log(window.sessionStorage.getItem("p1"))
+            console.log(window.sessionStorage.getItem("p2"))
+            console.log(JSON.parse(sessionStorage.getItem("p2")))
+        }
+
+        function deleteSessionStorage() {
+
+            window.sessionStorage.removeItem("test")
+            window.sessionStorage.removeItem("p1")
+            window.sessionStorage.removeItem("p2")
+            window.sessionStorage.removeItem("p2")
+        }
+
+        function clearSessionStorage() {
+            window.sessionStorage.clear()
+
+        }
+    </script>
+</body>
+
+</html>
