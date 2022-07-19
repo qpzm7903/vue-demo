@@ -15,17 +15,17 @@
 <script>
 export default {
   name: "TodoItem",
-  props: ["todo", "checkTodo", "deleteTodo"],
+  props: ["todo"],
   methods: {
     handleClick (todoObj) {
-      console.log(todoObj)
-      // 一般不建议修改props里的数据
-      //   todoObj.done = !todoObj.done
-      this.checkTodo(todoObj.id)
+      this.$bus.$emit('checkTodo', todoObj.id)
     },
     handleDelete (todoObj) {
-      this.deleteTodo(todoObj.id)
-    }
+      this.$bus.$emit('deleteTodo', todoObj.id)
+    },
+    mounted () {
+
+    },
   }
 }
 </script>
