@@ -5,10 +5,11 @@
         <input type="checkbox" :checked="todo.done" @click="handleClick(todo)" />
         <!-- 用  双向绑定也可以实现 -->
         <!-- <input type="checkbox" v-model="todo.done" /> -->
-        <span>{{ todo.title }}</span>
+        <span v-show="!todo.isEdit">{{ todo.title }}</span>
+        <input v-show="todo.isEdit" type="text" :value="todo.title" @blur="handleBlur(todo,$event)" ref="inputTitle" />
       </label>
       <button class="btn btn-danger" @click="handleDelete(todo)">删除</button>
-      <button class="btn btn-edit">编辑</button>
+      <button v-show="!todo.isEdit" class="btn btn-edit" @click="handleEdit(todo)">编辑</button>
     </li>
   </div>
 </template>
@@ -24,9 +25,26 @@ export default {
     handleDelete (todoObj) {
       this.$bus.$emit('deleteTodo', todoObj.id)
     },
-    mounted () {
+    handleEdit (todoObj) {
+      // 直接设置不生效，因为input框还没出现
+      //   this.$refs.inputTitle.focus()
+
+      if (todoObj.hasOwnProperty('isEdit')) {
+        todoObj.isEdit = true;
+      } else {
+        this.$set(todoObj, 'isEdit', true)
+      }
+      this.$nextTick(function () {
+        this.$refs.inputTitle.focus()
+      })
+
 
     },
+    handleBlur (todoObj, event) {
+      todoObj.isEdit = false
+      this.$bus.$emit("updateTodo", todoObj.id, event.target.value)
+
+    }
   }
 }
 </script>

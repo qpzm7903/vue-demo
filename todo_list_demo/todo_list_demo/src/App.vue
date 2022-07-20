@@ -48,6 +48,13 @@ export default {
     },
     allDone (done) {
       this.todos.forEach((todo) => { todo.done = done })
+    },
+    updateTodo (id, value) {
+      this.todos.forEach((todo) => {
+        if (todo.id == id) {
+          todo.title = value
+        }
+      })
     }
   },
   // 默认浅层
@@ -71,10 +78,20 @@ export default {
     this.$bus.$on('deleteTodo', (id) => {
       this.deleteTodo(id)
     })
+
+    this.$bus.$on('updateTodo', (id, value) => {
+      if (value.trim() === '') {
+        alert('can not be empty')
+        return
+      }
+
+      this.updateTodo(id, value)
+    })
   },
   beforeDestroy () {
     this.$bus.$off('checkTodo')
     this.$bus.$off('deleteTodo')
+    this.$bus.$off('updateTodo')
   }
 }
 </script>
